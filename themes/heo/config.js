@@ -48,7 +48,7 @@ const CONFIG = {
 
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: 'https://x.com/wenhaofree',
-  HEO_INFO_CARD_ICON1: 'fab fa-x-twitter',
+  HEO_INFO_CARD_ICON1: 'fab fa-twitter',
   HEO_INFO_CARD_URL2: 'https://github.com/wenhaofree',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   // HEO_INFO_CARD_URL3: 'https://www.wenhaofree.com',
