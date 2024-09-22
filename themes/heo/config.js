@@ -13,9 +13,9 @@ const CONFIG = {
   ],
 
   // 英雄区左右侧组件颠倒位置
-  HEO_HERO_REVERSE: false,
+  // HEO_HERO_REVERSE: false,
   // 博客主体区左右侧组件颠倒位置
-  HEO_HERO_BODY_REVERSE: false,
+  // HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
   // HEO_HERO_TITLE_1: '分享编程',
@@ -48,7 +48,7 @@ const CONFIG = {
 
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: 'https://x.com/wenhaofree',
-  HEO_INFO_CARD_ICON1: 'fas fa-twitter',
+  HEO_INFO_CARD_ICON1: 'fa-brands fa-x-twitter',
   HEO_INFO_CARD_URL2: 'https://github.com/wenhaofree',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   // HEO_INFO_CARD_URL3: 'https://www.wenhaofree.com',
