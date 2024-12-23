@@ -97,6 +97,7 @@ const GlobalHead = props => {
     <Head>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
+      <meta name="google-adsense-account" content="ca-pub-5455845858903578"></meta>
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
