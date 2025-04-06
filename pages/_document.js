@@ -29,6 +29,24 @@ class MyDocument extends Document {
               />
             </>
           )}
+          
+          {/* 添加SEO优化标签 */}
+          <meta name="robots" content={BLOG.SEO_TOBOTS_TAG || 'all'} />
+          <meta name="author" content={BLOG.AUTHOR} />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+          
+          {/* 添加结构化数据，告诉搜索引擎这是一个文章网站 */}
+          <script type="application/ld+json">
+            {`
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "${BLOG.TITLE || '一兆资源网'}",
+                "description": "${BLOG.BIO || '您的数字宝藏收藏夹📂'}",
+                "url": "${BLOG.LINK || 'https://yzzzzy.com'}"
+              }
+            `}
+          </script>
         </Head>
 
         <body>

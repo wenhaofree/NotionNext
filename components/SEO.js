@@ -108,7 +108,7 @@ const SEO = props => {
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
       />
-      <meta name="robots" content="follow, index" />
+      <meta name="robots" content="follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta charSet="UTF-8" />
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
@@ -134,6 +134,21 @@ const SEO = props => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
+
+      {/* 添加更多SEO相关标签 */}
+      <meta name="author" content={AUTHOR} />
+      <link rel="canonical" href={url} />
+      <meta property="article:author" content={AUTHOR} />
+      <meta property="article:publisher" content={url} />
+      <meta name="application-name" content={title} />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content={title} />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="msapplication-TileColor" content="#000000" />
+      <meta name="msapplication-tap-highlight" content="no" />
+      <meta name="theme-color" content={BACKGROUND_DARK} />
 
       <link rel="icon" href={BLOG_FAVICON} />
 

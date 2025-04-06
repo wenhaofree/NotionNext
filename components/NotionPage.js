@@ -51,7 +51,7 @@ const NotionPage = ({ post, className }) => {
     /**
      * 放大查看图片时替换成高清图像
      */
-    const observer = new MutationObserver((mutationsList, observer) => {
+    const mutationObserver = new MutationObserver(mutationsList => {
       mutationsList.forEach(mutation => {
         if (
           mutation.type === 'attributes' &&
@@ -74,14 +74,14 @@ const NotionPage = ({ post, className }) => {
     })
 
     // 监视页面元素和属性变化
-    observer.observe(document.body, {
+    mutationObserver.observe(document.body, {
       attributes: true,
       subtree: true,
       attributeFilter: ['class']
     })
 
     return () => {
-      observer.disconnect()
+      mutationObserver.disconnect()
     }
   }, [post])
 
@@ -100,6 +100,18 @@ const NotionPage = ({ post, className }) => {
     }
   }, [post])
 
+  useEffect(() => {
+    if (isBrowser) {
+      loadExternalResource('/js/prism-mac-style.js', 'js').then(() => {
+        setTimeout(() => {
+          if (window) {
+            window.Prism && window.Prism.highlightAll()
+          }
+        }, 200)
+      })
+    }
+  })
+
   return (
     <div
       id='notion-article'
@@ -116,10 +128,37 @@ const NotionPage = ({ post, className }) => {
           Pdf,
           Tweet
         }}
+        showTableOfContents={true}
+        minTableOfContentsItems={3}
+        showCollectionViewDropdown={true}
+        defaultPageIcon={null}
+        defaultPageCover={null}
+        defaultPageCoverPosition={0.5}
+        className='article-content'
       />
 
       <AdEmbed />
       <PrismMac />
+      
+      {post?.tags && post.tags.length > 0 && (
+        <div className="post-tags mt-4 text-sm">
+          <div className="flex flex-wrap">
+            <span className="mr-2 text-gray-500">相关标签:</span>
+            {post.tags.map(tag => (
+              <span key={tag} className="mr-2 mb-2 px-2 py-1 bg-gray-100 rounded text-gray-700">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {post?.summary && (
+        <div className="post-summary mt-4 text-gray-700 bg-gray-50 p-4 rounded">
+          <div className="font-bold text-gray-900 mb-2">内容摘要:</div>
+          <p>{post.summary}</p>
+        </div>
+      )}
     </div>
   )
 }
@@ -212,7 +251,7 @@ function getMediumZoomMargin() {
 // 代码
 const Code = dynamic(
   () =>
-    import('react-notion-x/build/third-party/code').then(async m => {
+    import('react-notion-x/build/third-party/code').then(m => {
       return m.Code
     }),
   { ssr: false }
