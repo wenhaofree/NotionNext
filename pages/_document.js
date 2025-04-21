@@ -1,6 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import BLOG from '@/blog.config'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -47,6 +48,13 @@ class MyDocument extends Document {
               }
             `}
           </script>
+          
+          {/* Umami追踪代码 */}
+          <Script
+            src="https://umami.wenhaofree.com/script.js"
+            data-website-id="4d7f02e3-4a29-45f1-99e6-aa562d665f3c"
+            defer
+          />
         </Head>
 
         <body>
