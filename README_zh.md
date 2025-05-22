@@ -1,0 +1,11 @@
+## 分支说明：
+- main：
+  - 主分支： 用于代码同步最新版本
+- blog：
+  - 博客： blog.wenhaofree.com  部署香港服务器
+- wenhaofree：
+  - 博客： blog.fuwenhao.club   部署vercel中， 已添加：umami追踪
+- yzzzzy：
+  - 资源： yzzzzy.com       部署在香港服务器， 已添加：umami追踪
+- aigptgod：
+  - 资源： aigptgod.com   用于ai资讯网站， 已废弃；
