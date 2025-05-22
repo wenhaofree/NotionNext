@@ -29,6 +29,9 @@ class MyDocument extends Document {
               />
             </>
           )}
+
+          {/* Umami追踪代码-blog.fuwenhao.club */}
+          <script defer src="https://umami.wenhaofree.com/script.js" data-website-id="81f2c3f9-4064-49c9-8403-7d83c6aea2c1"></script>
         </Head>
 
         <body>
