@@ -179,6 +179,44 @@ const SEO = props => {
           <meta property="article:publisher" content={FACEBOOK_PAGE} />
         </>
       )}
+      {/* 增强的结构化数据 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getStructuredData(meta, siteInfo, AUTHOR, url))
+        }}
+      />
+
+      {/* 面包屑导航结构化数据 */}
+      {meta?.slug && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getBreadcrumbStructuredData(meta, siteInfo))
+          }}
+        />
+      )}
+
+      {/* 网站搜索框结构化数据 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": url,
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": `${url}/search?q={search_term_string}`
+              },
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
+
       {children}
     </Head>
   )
@@ -294,6 +332,95 @@ const getSEOMeta = (props, router, locale) => {
         category: post?.category?.[0],
         tags: post?.tags
       }
+  }
+}
+
+/**
+ * 生成结构化数据
+ * @param {*} meta
+ * @param {*} siteInfo
+ * @param {*} author
+ * @param {*} url
+ * @returns
+ */
+const getStructuredData = (meta, siteInfo, author, url) => {
+  const baseData = {
+    "@context": "https://schema.org",
+    "@type": meta?.type === 'Post' ? "BlogPosting" : "WebPage",
+    "headline": meta?.title || siteInfo?.title,
+    "description": meta?.description || siteInfo?.description,
+    "url": url,
+    "author": {
+      "@type": "Person",
+      "name": author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteInfo?.title,
+      "logo": {
+        "@type": "ImageObject",
+        "url": siteInfo?.icon
+      }
+    }
+  }
+
+  if (meta?.type === 'Post') {
+    return {
+      ...baseData,
+      "datePublished": meta?.publishDay,
+      "dateModified": meta?.lastEditedDay || meta?.publishDay,
+      "image": meta?.image || siteInfo?.pageCover,
+      "articleSection": meta?.category,
+      "keywords": meta?.tags?.join(', '),
+      "wordCount": meta?.wordCount || 0,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": url
+      }
+    }
+  }
+
+  return baseData
+}
+
+/**
+ * 生成面包屑导航结构化数据
+ * @param {*} meta
+ * @param {*} siteInfo
+ * @returns
+ */
+const getBreadcrumbStructuredData = (meta, siteInfo) => {
+  const items = [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": siteInfo?.link || "/"
+    }
+  ]
+
+  if (meta?.category) {
+    items.push({
+      "@type": "ListItem",
+      "position": 2,
+      "name": meta.category,
+      "item": `${siteInfo?.link}/category/${meta.category}`
+    })
+  }
+
+  if (meta?.title && meta?.type === 'Post') {
+    items.push({
+      "@type": "ListItem",
+      "position": items.length + 1,
+      "name": meta.title,
+      "item": `${siteInfo?.link}/${meta.slug}`
+    })
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items
   }
 }
 

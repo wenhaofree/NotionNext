@@ -19,9 +19,16 @@ import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
-// import { ClerkProvider } from '@clerk/nextjs'
+
+// 动态导入组件
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
+)
+const AdSenseScript = dynamic(() =>
+  import('@/components/AdSense').then(m => m.AdSenseScript)
+)
+const CookieConsent = dynamic(() =>
+  import('@/components/CookieConsent')
 )
 
 /**
@@ -56,9 +63,11 @@ const MyApp = ({ Component, pageProps }) => {
     <GlobalContextProvider {...pageProps}>
       <GLayout {...pageProps}>
         <SEO {...pageProps} />
+        <AdSenseScript />
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
+      <CookieConsent />
     </GlobalContextProvider>
   )
   return (

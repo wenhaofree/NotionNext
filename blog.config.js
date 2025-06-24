@@ -49,6 +49,20 @@ const BLOG = {
   CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
   CUSTOM_EXTERNAL_CSS: [''], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
 
+  // Google AdSense 配置
+  ADSENSE_ENABLED: process.env.NEXT_PUBLIC_ADSENSE_ENABLED || false,
+  ADSENSE_PUBLISHER_ID: process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || '', // ca-pub-xxxxxxxxxxxxxxxx
+  ADSENSE_SLOT_TOP: process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP || '', // 文章顶部广告位
+  ADSENSE_SLOT_IN_ARTICLE: process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE || '', // 文章中间广告位
+  ADSENSE_SLOT_BOTTOM: process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM || '', // 文章底部广告位
+  ADSENSE_SLOT_SIDEBAR: process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR || '', // 侧边栏广告位
+  ADSENSE_SLOT_IN_FEED: process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_FEED || '', // 信息流广告位
+  ADSENSE_SLOT_MOBILE_BANNER: process.env.NEXT_PUBLIC_ADSENSE_SLOT_MOBILE_BANNER || '', // 移动端横幅
+  ADSENSE_SLOT_DESKTOP_BANNER: process.env.NEXT_PUBLIC_ADSENSE_SLOT_DESKTOP_BANNER || '', // 桌面端横幅
+
+  // Cookie 同意配置
+  COOKIE_CONSENT_ENABLED: process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENABLED || true,
+
   // 自定义菜单
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu类型的菜单，替代了3.12版本前的Page类型
 

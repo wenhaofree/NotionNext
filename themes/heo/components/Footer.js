@@ -25,6 +25,31 @@ const Footer = () => {
 
       <br />
 
+      {/* 法律页面链接 */}
+      <div className='w-full py-4 px-6 bg-gray-50 dark:bg-[#1e1e1e] border-t dark:border-t-[#3D3D3F]'>
+        <div className='flex flex-wrap justify-center gap-4 text-sm text-gray-600 dark:text-gray-400'>
+          <a href='/about' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+            关于我们
+          </a>
+          <span className='text-gray-400'>|</span>
+          <a href='/privacy' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+            隐私政策
+          </a>
+          <span className='text-gray-400'>|</span>
+          <a href='/terms' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+            使用条款
+          </a>
+          <span className='text-gray-400'>|</span>
+          <a href='/disclaimer' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+            免责声明
+          </a>
+          <span className='text-gray-400'>|</span>
+          <a href='/contact' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+            联系我们
+          </a>
+        </div>
+      </div>
+
       {/* 底部页面信息 */}
       <div
         id='footer-bottom'

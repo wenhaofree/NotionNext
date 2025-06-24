@@ -27,6 +27,7 @@ export default function LazyImage({
   const [currentSrc, setCurrentSrc] = useState(
     placeholderSrc || defaultPlaceholderSrc
   )
+  const [hasError, setHasError] = useState(false)
 
   /**
    * 占位图加载成功
@@ -50,17 +51,10 @@ export default function LazyImage({
    * 图片加载失败回调
    */
   const handleImageError = () => {
+    setHasError(true)
     if (imageRef.current) {
-      // 尝试加载 placeholderSrc，如果失败则加载 defaultPlaceholderSrc
-      if (imageRef.current.src !== placeholderSrc && placeholderSrc) {
-        imageRef.current.src = placeholderSrc
-      } else {
-        imageRef.current.src = defaultPlaceholderSrc
-      }
       // 移除占位符类名
-      if (imageRef.current) {
-        imageRef.current.classList.remove('lazy-image-placeholder')
-      }
+      imageRef.current.classList.remove('lazy-image-placeholder')
     }
   }
 
@@ -119,6 +113,19 @@ export default function LazyImage({
     return null
   }
 
+  // 如果图片加载失败，显示错误占位符
+  // if (hasError) {
+  //   return (
+  //     <div
+  //       className={`lazy-image-error ${className || ''}`}
+  //       style={{ width: width || 'auto', height: height || 'auto', ...style }}
+  //       title="图片加载失败"
+  //     >
+  //       <span>⚠️</span>
+  //     </div>
+  //   )
+  // }
+
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -129,20 +136,7 @@ export default function LazyImage({
           <link rel='preload' as='image' href={adjustImgSize(src, maxWidth)} />
         </Head>
       )}
-      <style>
-        {` 
-        .lazy-image-placeholder{
-            background: 
-                linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-                #f2f2f2;
-            background-size:300% 100%;
-            animation: l1 1s infinite linear;
-            }
-            @keyframes l1 {
-            0% {background-position: right}
-        }
-        `}
-      </style>
+
     </>
   )
 }
