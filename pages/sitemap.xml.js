@@ -39,34 +39,58 @@ function generateLocalesSitemap(link, allPages, locale) {
       loc: `${link}${locale}`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
-      priority: '0.7'
+      priority: '1.0'
     },
     {
       loc: `${link}${locale}/archive`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
-      priority: '0.7'
+      priority: '0.8'
     },
     {
       loc: `${link}${locale}/category`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
-      priority: '0.7'
+      priority: '0.8'
     },
     {
-      loc: `${link}${locale}/rss/feed.xml`,
+      loc: `${link}${locale}/tag`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
-      priority: '0.7'
+      priority: '0.8'
     },
     {
       loc: `${link}${locale}/search`,
       lastmod: new Date().toISOString().split('T')[0],
-      changefreq: 'daily',
+      changefreq: 'weekly',
+      priority: '0.6'
+    },
+    {
+      loc: `${link}${locale}/about`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'monthly',
+      priority: '0.9'
+    },
+    {
+      loc: `${link}${locale}/contact`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'monthly',
       priority: '0.7'
     },
     {
-      loc: `${link}${locale}/tag`,
+      loc: `${link}${locale}/privacy`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'yearly',
+      priority: '0.5'
+    },
+    {
+      loc: `${link}${locale}/terms`,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: 'yearly',
+      priority: '0.5'
+    },
+    {
+      loc: `${link}${locale}/rss/feed.xml`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'

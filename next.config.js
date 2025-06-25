@@ -97,6 +97,8 @@ const nextConfig = {
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
+    // 图片质量优化
+    quality: 85,
     // 允许next/image加载的图片 域名
     domains: [
       'gravatar.com',
@@ -107,8 +109,20 @@ const nextConfig = {
       'p1.qhimg.com',
       'webmention.io',
       'ko-fi.com'
-    ]
+    ],
+    // 图片尺寸优化
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384]
   },
+
+  // 性能优化
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['@headlessui/react', 'react-icons']
+  },
+
+  // 压缩配置
+  compress: true,
 
   // 默认将feed重定向至 /public/rss/feed.xml
   redirects: process.env.EXPORT

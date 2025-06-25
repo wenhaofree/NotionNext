@@ -21,6 +21,22 @@ const Footer = ({ title }) => {
         <SocialButton />
       </div>
 
+      {/* 重要页面链接 */}
+      <div className='w-full py-4 flex justify-center space-x-6 text-sm'>
+        <a href='/about' className='hover:text-blue-500 transition-colors duration-200'>
+          关于我
+        </a>
+        <a href='/contact' className='hover:text-blue-500 transition-colors duration-200'>
+          联系我
+        </a>
+        <a href='/privacy' className='hover:text-blue-500 transition-colors duration-200'>
+          隐私政策
+        </a>
+        <a href='/terms' className='hover:text-blue-500 transition-colors duration-200'>
+          使用条款
+        </a>
+      </div>
+
       <br />
 
       {/* 底部页面信息 */}

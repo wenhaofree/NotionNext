@@ -31,6 +31,18 @@ export const MenuListSide = props => {
       name: locale.COMMON.TAGS,
       href: '/tag',
       show: siteConfig('HEO_MENU_TAG', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-user',
+      name: locale.NAV.ABOUT || '关于',
+      href: '/about',
+      show: siteConfig('HEO_MENU_ABOUT', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-envelope',
+      name: locale.NAV.CONTACT || '联系',
+      href: '/contact',
+      show: siteConfig('HEO_MENU_CONTACT', null, CONFIG)
     }
   ]
 

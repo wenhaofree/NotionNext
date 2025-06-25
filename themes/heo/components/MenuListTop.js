@@ -28,6 +28,20 @@ export const MenuListTop = props => {
       name: locale.NAV.ARCHIVE,
       href: '/archive',
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
+    },
+    {
+      id: 4,
+      icon: 'fas fa-user',
+      name: locale.NAV.ABOUT || '关于',
+      href: '/about',
+      show: siteConfig('HEO_MENU_ABOUT', null, CONFIG)
+    },
+    {
+      id: 5,
+      icon: 'fas fa-envelope',
+      name: locale.NAV.CONTACT || '联系',
+      href: '/contact',
+      show: siteConfig('HEO_MENU_CONTACT', null, CONFIG)
     }
   ]
 

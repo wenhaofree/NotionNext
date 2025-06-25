@@ -5,6 +5,8 @@ import Card from './Card'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import LatestPostsGroupMini from './LatestPostsGroupMini'
+import PopularPosts from './PopularPosts'
+import TagCloud from './TagCloud'
 import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
 
@@ -27,7 +29,7 @@ const FaceBookPage = dynamic(
  * @returns
  */
 export default function SideRight(props) {
-  const { post, tagOptions, currentTag, rightAreaSlot } = props
+  const { post, tagOptions, currentTag, rightAreaSlot, posts } = props
 
   // 只摘取标签的前60个，防止右侧过长
   const sortedTags = tagOptions?.slice(0, 60) || []
@@ -56,6 +58,20 @@ export default function SideRight(props) {
           }>
           <LatestPostsGroupMini {...props} />
         </div>
+
+        {/* 热门文章 */}
+        {posts && posts.length > 0 && (
+          <div className='wow fadeInUp'>
+            <PopularPosts posts={posts} siteInfo={props.siteInfo} />
+          </div>
+        )}
+
+        {/* 标签云 */}
+        {tagOptions && tagOptions.length > 0 && (
+          <div className='wow fadeInUp'>
+            <TagCloud tagOptions={tagOptions} currentTag={currentTag} />
+          </div>
+        )}
 
         {rightAreaSlot}
 

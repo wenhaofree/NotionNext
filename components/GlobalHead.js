@@ -157,8 +157,95 @@ const GlobalHead = props => {
           <meta property='article:author' content={siteConfig('AUTHOR')} />
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          <meta property='article:tag' content={keywords} />
+          {meta.lastEditedDay && (
+            <meta property='article:modified_time' content={meta.lastEditedDay} />
+          )}
         </>
       )}
+
+      {/* 结构化数据 - JSON-LD */}
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': meta?.type === 'Post' ? 'BlogPosting' : 'WebSite',
+            ...(meta?.type === 'Post' ? {
+              headline: title,
+              description: description,
+              image: image,
+              author: {
+                '@type': 'Person',
+                name: siteConfig('AUTHOR'),
+                url: siteConfig('LINK')
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: siteConfig('AUTHOR'),
+                logo: {
+                  '@type': 'ImageObject',
+                  url: `${siteConfig('LINK')}/favicon.ico`
+                }
+              },
+              datePublished: meta.publishDay,
+              dateModified: meta.lastEditedDay || meta.publishDay,
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': url
+              },
+              keywords: keywords,
+              articleSection: category
+            } : {
+              name: title,
+              description: description,
+              url: siteConfig('LINK'),
+              author: {
+                '@type': 'Person',
+                name: siteConfig('AUTHOR')
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: siteConfig('AUTHOR')
+              }
+            })
+          })
+        }}
+      />
+
+      {/* 面包屑导航结构化数据 */}
+      {meta?.type === 'Post' && meta?.category && (
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: '首页',
+                  item: siteConfig('LINK')
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: meta.category,
+                  item: `${siteConfig('LINK')}/category/${meta.category}`
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: title,
+                  item: url
+                }
+              ]
+            })
+          }}
+        />
+      )}
+
       {children}
     </Head>
   )
