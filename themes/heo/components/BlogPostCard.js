@@ -4,6 +4,10 @@ import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import NotionPage from '@/components/NotionPage'
+import WordCount from '@/components/WordCount'
+import { formatDateFmt } from '@/lib/utils/formatDate'
+import EnhancedPostSummary from './EnhancedPostSummary'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -91,12 +95,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             </Link>
           </header>
 
-          {/* 摘要 */}
-          {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
-              {post.summary}
-            </main>
-          )}
+          {/* 增强的文章摘要 */}
+          <EnhancedPostSummary post={post} />
 
           <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
             <div>

@@ -4,9 +4,8 @@ import { getLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
- * 关于页面
- * @param {*} props
- * @returns
+ * 关于我们页面
+ * 提供详细的网站介绍、团队信息、使命愿景等内容
  */
 const About = props => {
   // 根据页面路径加载不同Layout文件
@@ -15,14 +14,14 @@ const About = props => {
     router: useRouter()
   })
 
-  // 创建关于页面的内容
+  // 创建关于页面的丰富内容
   const aboutContent = {
     id: 'about-page',
     type: 'Page',
-    title: '关于我',
+    title: '关于 AIGPTGOD',
     slug: 'about',
     status: 'Published',
-    summary: '了解更多关于文浩和这个技术博客的信息',
+    summary: '了解 AIGPTGOD - 专业的AI技术资讯平台，致力于为用户提供最新、最有价值的人工智能内容',
     blockMap: {
       block: {
         'about-content': {
@@ -30,25 +29,74 @@ const About = props => {
             id: 'about-content',
             type: 'page',
             properties: {
-              title: [['关于我']]
+              title: [['关于 AIGPTGOD']]
             },
             content: [
-              'intro-block',
-              'skills-block',
-              'experience-block',
+              'mission-block',
+              'values-block',
+              'features-block',
+              'team-block',
               'contact-block'
             ]
           }
         },
-        'intro-block': {
+        'mission-block': {
           value: {
-            id: 'intro-block',
+            id: 'mission-block',
             type: 'text',
             properties: {
-              title: [['👋 你好，我是文浩']]
+              title: [['🚀 我们的使命']]
             },
             format: {
-              block_color: 'default'
+              block_color: 'blue'
+            }
+          }
+        },
+        'values-block': {
+          value: {
+            id: 'values-block',
+            type: 'text',
+            properties: {
+              title: [['💎 核心价值']]
+            },
+            format: {
+              block_color: 'green'
+            }
+          }
+        },
+        'features-block': {
+          value: {
+            id: 'features-block',
+            type: 'text',
+            properties: {
+              title: [['⭐ 内容特色']]
+            },
+            format: {
+              block_color: 'purple'
+            }
+          }
+        },
+        'team-block': {
+          value: {
+            id: 'team-block',
+            type: 'text',
+            properties: {
+              title: [['👥 我们的团队']]
+            },
+            format: {
+              block_color: 'orange'
+            }
+          }
+        },
+        'contact-block': {
+          value: {
+            id: 'contact-block',
+            type: 'text',
+            properties: {
+              title: [['📧 联系我们']]
+            },
+            format: {
+              block_color: 'red'
             }
           }
         }
@@ -61,10 +109,11 @@ const About = props => {
     ...props,
     post: aboutContent,
     meta: {
-      title: '关于我 - 文浩的技术博客',
-      description: '了解更多关于文浩和这个技术博客的信息，包括技术背景、专业技能、工作经验和联系方式。',
+      title: '关于我们 - AIGPTGOD | 专业AI技术资讯平台',
+      description: '了解 AIGPTGOD - 专业的AI技术资讯平台，致力于为用户提供最新、最有价值的人工智能内容。我们专注于AI技术分析、工具评测、行业趋势和实用教程。',
       type: 'Page',
-      slug: 'about'
+      slug: 'about',
+      keywords: 'AIGPTGOD, 关于我们, AI技术, 人工智能, 技术博客, AI资讯, 机器学习, 深度学习'
     }
   }
 

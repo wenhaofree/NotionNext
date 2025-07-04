@@ -15,6 +15,7 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import WWAds from '@/components/WWAds'
+import SEOEnhancer from '@/components/SEOEnhancer'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -37,6 +38,8 @@ import PostAdjacent from './components/PostAdjacent'
 import PostCopyright from './components/PostCopyright'
 import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
+import ArticleInfo from './components/ArticleInfo'
+import RelatedPosts from './components/RelatedPosts'
 import PostRecommend from './components/PostRecommend'
 import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
@@ -50,7 +53,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, slotTop, className } = props
+  const { children, slotTop, className, post, meta, siteInfo } = props
 
   // 全屏模式下的最大宽度
   const { fullWidth, isDarkMode } = useGlobal()
@@ -95,6 +98,9 @@ const LayoutBase = props => {
       id='theme-heo'
       className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
+
+      {/* SEO增强组件 */}
+      <SEOEnhancer post={post} meta={meta} siteInfo={siteInfo} />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
       {headerSlot}
@@ -299,6 +305,13 @@ const LayoutSlug = props => {
               id='article-wrapper'
               itemScope
               itemType='https://schema.org/Movie'>
+              {/* 文章信息统计 */}
+              {post?.type === 'Post' && (
+                <div className='px-5'>
+                  <ArticleInfo post={post} />
+                </div>
+              )}
+
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
@@ -319,6 +332,8 @@ const LayoutSlug = props => {
                   <PostCopyright {...props} />
                   {/* 文章推荐 */}
                   <PostRecommend {...props} />
+                  {/* 相关文章推荐 */}
+                  <RelatedPosts currentPost={post} allPosts={props.allNavPages} siteInfo={props.siteInfo} />
                 </div>
               )}
             </article>
