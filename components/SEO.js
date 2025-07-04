@@ -197,6 +197,33 @@ const SEO = props => {
         />
       )}
 
+      {/* 组织信息结构化数据 - AdSense 优化 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": siteInfo?.title || AUTHOR,
+            "url": url,
+            "logo": {
+              "@type": "ImageObject",
+              "url": `${url}/logo.png`
+            },
+            "sameAs": [
+              siteConfig('CONTACT_GITHUB'),
+              siteConfig('CONTACT_TWITTER'),
+              siteConfig('CONTACT_LINKEDIN')
+            ].filter(Boolean),
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "url": `${url}/contact`
+            }
+          })
+        }}
+      />
+
       {/* 网站搜索框结构化数据 */}
       <script
         type="application/ld+json"
@@ -398,6 +425,32 @@ const getBreadcrumbStructuredData = (meta, siteInfo) => {
       "item": siteInfo?.link || "/"
     }
   ]
+
+  // 添加分类面包屑
+  if (meta?.category) {
+    items.push({
+      "@type": "ListItem",
+      "position": 2,
+      "name": meta.category,
+      "item": `${siteInfo?.link}/category/${meta.category}`
+    })
+  }
+
+  // 添加当前页面
+  if (meta?.title) {
+    items.push({
+      "@type": "ListItem",
+      "position": items.length + 1,
+      "name": meta.title,
+      "item": `${siteInfo?.link}/${meta.slug}`
+    })
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items
+  }
 
   if (meta?.category) {
     items.push({

@@ -18,24 +18,24 @@ const CONFIG = {
   // HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  // HEO_HERO_TITLE_1: '分享编程',
-  // HEO_HERO_TITLE_2: '与思维认知',
-  // HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  // HEO_HERO_TITLE_4: '新版上线',
-  // HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  // HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '分享知识',
+  HEO_HERO_TITLE_2: '传递价值',
+  HEO_HERO_TITLE_3: '一兆资源网',
+  HEO_HERO_TITLE_4: '欢迎访问',
+  HEO_HERO_TITLE_5: '发现更多精彩内容',
+  HEO_HERO_TITLE_LINK: '/',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
-  // // 英雄区显示三个置顶分类
-  // HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  // HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  // HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
+  // 英雄区显示三个置顶分类
+  HEO_HERO_CATEGORY_1: { title: '技术分享', url: '/category/技术' },
+  HEO_HERO_CATEGORY_2: { title: '学习资源', url: '/category/学习' },
+  HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/category/教程' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
-  // HEO_HERO_RECOMMEND_POST_TAG: '推荐',
-  // HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
-  //   HERO_RECOMMEND_COVER: 'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_1280.jpg', // 英雄区右侧图片
+  HEO_HERO_RECOMMEND_POST_TAG: '推荐',
+  HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: true, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
+  HERO_RECOMMEND_COVER: 'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_1280.jpg', // 英雄区右侧图片
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
@@ -120,7 +120,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://blog.wenhaofree.com/article/432c2af4-a353-4fb0-95c0-3dfb824a61cb',
+  HEO_SOCIAL_CARD_URL: 'https://blog.fuwenhao.club/article/432c2af4-a353-4fb0-95c0-3dfb824a61cb',
   //HEO_SOCIAL_CARD_URL: 'https://blog.fuwenhao.club/article/groups',
 
   // 底部统计面板文案

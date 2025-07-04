@@ -25,28 +25,33 @@ const Footer = () => {
 
       <br />
 
-      {/* 法律页面链接 */}
+      {/* 法律页面链接 - AdSense 合规要求 */}
       <div className='w-full py-4 px-6 bg-gray-50 dark:bg-[#1e1e1e] border-t dark:border-t-[#3D3D3F]'>
         <div className='flex flex-wrap justify-center gap-4 text-sm text-gray-600 dark:text-gray-400'>
-          <a href='/about' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+          <a href='/about' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors' title='了解我们的使命和价值观'>
             关于我们
           </a>
           <span className='text-gray-400'>|</span>
-          <a href='/privacy' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+          <a href='/privacy' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors' title='了解我们如何保护您的隐私'>
             隐私政策
           </a>
           <span className='text-gray-400'>|</span>
-          <a href='/terms' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+          <a href='/terms' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors' title='网站使用条款和规则'>
             使用条款
           </a>
           <span className='text-gray-400'>|</span>
-          <a href='/disclaimer' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+          <a href='/disclaimer' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors' title='免责声明和法律条款'>
             免责声明
           </a>
           <span className='text-gray-400'>|</span>
-          <a href='/contact' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+          <a href='/contact' className='hover:text-blue-600 dark:hover:text-blue-400 transition-colors' title='联系我们获取帮助'>
             联系我们
           </a>
+        </div>
+
+        {/* AdSense 合规声明 */}
+        <div className='text-center mt-3 text-xs text-gray-500 dark:text-gray-500'>
+          本网站使用 Cookie 来改善用户体验。继续使用本网站即表示您同意我们的 Cookie 政策。
         </div>
       </div>
 

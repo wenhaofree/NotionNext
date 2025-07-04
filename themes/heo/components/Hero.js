@@ -24,8 +24,7 @@ const Hero = props => {
       <div
         id='hero'
         style={{ zIndex: 1 }}
-        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
-           recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
+        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''} recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
         {/* 左侧banner组 */}
         <BannerGroup {...props} />
 
@@ -68,9 +67,27 @@ function Banner(props) {
    * 随机跳转文章
    */
   function handleClickBanner() {
+    // 检查是否有文章数据
+    if (!allNavPages || allNavPages.length === 0) {
+      console.warn('没有可用的文章数据')
+      return
+    }
+
     const randomIndex = Math.floor(Math.random() * allNavPages.length)
     const randomPost = allNavPages[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+
+    // 检查随机文章是否有效
+    if (randomPost && randomPost.slug) {
+      try {
+        const subPath = siteConfig('SUB_PATH', '')
+        const url = `${subPath}/${randomPost.slug}`
+        router.push(url)
+      } catch (error) {
+        console.warn('导航到随机文章失败:', error)
+      }
+    } else {
+      console.warn('随机文章数据无效:', randomPost)
+    }
   }
 
   // 遮罩文字
@@ -167,12 +184,17 @@ function TagsGroupBar() {
  * @returns
  */
 function GroupMenu() {
-  const url_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.url || ''
-  const title_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.title || ''
-  const url_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.url || ''
-  const title_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.title || ''
-  const url_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.url || ''
-  const title_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.title || ''
+  // 安全获取配置，提供默认值
+  const category1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG) || {}
+  const category2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG) || {}
+  const category3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG) || {}
+
+  const url_1 = category1.url || '/'
+  const title_1 = category1.title || '分类一'
+  const url_2 = category2.url || '/'
+  const title_2 = category2.title || '分类二'
+  const url_3 = category3.url || '/'
+  const title_3 = category3.title || '分类三'
 
   return (
     <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
@@ -238,8 +260,16 @@ function TopGroup(props) {
         id='top-group'
         className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
         {topPosts?.map((p, index) => {
+          // 安全检查文章数据
+          if (!p || !p.slug) {
+            return null
+          }
+
+          const subPath = siteConfig('SUB_PATH', '')
+          const href = `${subPath}/${p.slug}`
+
           return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+            <Link href={href} key={index}>
               <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                 <LazyImage
                   priority={index === 0}
@@ -257,7 +287,7 @@ function TopGroup(props) {
               </div>
             </Link>
           )
-        })}
+        }).filter(Boolean)}
       </div>
       {/* 一个大的跳转文章卡片 */}
       <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
@@ -269,47 +299,66 @@ function TopGroup(props) {
  * 获取推荐置顶文章
  */
 function getTopPosts({ latestPosts, allNavPages }) {
+  // 安全检查输入数据
+  if (!latestPosts || !Array.isArray(latestPosts)) {
+    return []
+  }
+
   // 默认展示最近更新
   if (
     !siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) ||
     siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) === ''
   ) {
-    return latestPosts
+    return latestPosts.slice(0, 6) // 最多返回6篇文章
+  }
+
+  // 安全检查 allNavPages
+  if (!allNavPages || !Array.isArray(allNavPages)) {
+    return latestPosts.slice(0, 6)
   }
 
   // 显示包含‘推荐’标签的文章
   let sortPosts = []
 
   // 排序方式
-  if (
-    JSON.parse(
-      siteConfig('HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME', null, CONFIG)
-    )
-  ) {
-    sortPosts = Object.create(allNavPages).sort((a, b) => {
-      const dateA = new Date(a?.lastEditedDate)
-      const dateB = new Date(b?.lastEditedDate)
-      return dateB - dateA
-    })
-  } else {
-    sortPosts = Object.create(allNavPages)
+  try {
+    const sortByUpdateTime = siteConfig('HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME', false, CONFIG)
+    // 处理布尔值配置，支持字符串和布尔值
+    const shouldSortByTime = typeof sortByUpdateTime === 'string'
+      ? sortByUpdateTime === 'true'
+      : Boolean(sortByUpdateTime)
+
+    if (shouldSortByTime) {
+      sortPosts = [...allNavPages].sort((a, b) => {
+        const dateA = new Date(a?.lastEditedDate || 0)
+        const dateB = new Date(b?.lastEditedDate || 0)
+        return dateB - dateA
+      })
+    } else {
+      sortPosts = [...allNavPages]
+    }
+  } catch (error) {
+    console.warn('排序文章时出错:', error)
+    sortPosts = [...allNavPages]
   }
 
   const topPosts = []
+  const recommendTag = siteConfig('HEO_HERO_RECOMMEND_POST_TAG', '', CONFIG)
+
   for (const post of sortPosts) {
     if (topPosts.length === 6) {
       break
     }
-    // 查找标签
-    if (
-      post?.tags?.indexOf(
-        siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG)
-      ) >= 0
-    ) {
-      topPosts.push(post)
+    // 安全检查文章和标签
+    if (post && post.tags && Array.isArray(post.tags) && recommendTag) {
+      if (post.tags.indexOf(recommendTag) >= 0) {
+        topPosts.push(post)
+      }
     }
   }
-  return topPosts
+
+  // 如果没有找到推荐文章，返回最新文章
+  return topPosts.length > 0 ? topPosts : latestPosts.slice(0, 6)
 }
 
 /**
@@ -345,10 +394,22 @@ function TodayCard({ cRef, siteInfo }) {
 
   /**
    * 点击卡片跳转的链接
-   * @param {*} e
    */
-  function handleCardClick(e) {
-    router.push(link)
+  function handleCardClick() {
+    // 检查链接是否有效
+    if (link && typeof link === 'string' && link.trim() !== '') {
+      try {
+        router.push(link)
+      } catch (error) {
+        console.warn('导航失败:', error)
+        // 如果内部链接失败，尝试外部链接
+        if (link.startsWith('http')) {
+          window.open(link, '_blank')
+        }
+      }
+    } else {
+      console.warn('无效的链接配置:', link)
+    }
   }
 
   return (
@@ -380,8 +441,7 @@ function TodayCard({ cRef, siteInfo }) {
           {/* 查看更多的按钮 */}
           <div
             onClick={handleClickShowMore}
-            className={`'${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center  rounded-3xl
-            glassmorphism transition-colors duration-100 `}>
+            className={`${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center rounded-3xl glassmorphism transition-colors duration-100`}>
             <PlusSmall
               className={
                 'group-hover:rotate-180 duration-500 transition-all w-6 h-6 mr-2 bg-white rounded-full stroke-black'

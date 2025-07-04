@@ -26,6 +26,7 @@ import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
+import Breadcrumb from './components/Breadcrumb'
 import CategoryBar from './components/CategoryBar'
 import FloatTocButton from './components/FloatTocButton'
 import Footer from './components/Footer'
@@ -137,10 +138,48 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
+  const { posts, siteInfo } = props
+  const { locale } = useGlobal()
+
+  // 获取推荐文章（前3篇）
+  const featuredPosts = posts?.slice(0, 3) || []
+  // 获取最新文章（第4-9篇）
+  const latestPosts = posts?.slice(3, 9) || []
+
   return (
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
+      {/* Hero 区域 - 增强版 */}
+      {siteConfig('HEO_HOME_BANNER_ENABLE', true, CONFIG) && (
+        <div className='mb-8'>
+          <Hero {...props} />
+        </div>
+      )}
+
+      {/* 网站介绍卡片 - AdSense 优化 */}
+      <div className='mb-8 bg-white dark:bg-[#1e1e1e] rounded-xl p-6 border dark:border-gray-700'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-800 dark:text-white'>
+          欢迎来到 {siteInfo?.title}
+        </h2>
+        <p className='text-gray-600 dark:text-gray-300 leading-relaxed mb-4'>
+          {siteInfo?.description || '这里是一个专注于分享高质量内容的知识平台，我们致力于为读者提供有价值的技术见解、学习资源和实用经验。'}
+        </p>
+        <div className='flex flex-wrap gap-2'>
+          <span className='px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm'>
+            技术分享
+          </span>
+          <span className='px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm'>
+            学习资源
+          </span>
+          <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm'>
+            实用教程
+          </span>
+        </div>
+      </div>
+
       {/* 文章分类条 */}
       <CategoryBar {...props} />
+
+      {/* 主要内容区域 */}
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -196,6 +235,9 @@ const LayoutSearch = props => {
   }, [])
   return (
     <div currentSearch={currentSearch}>
+      {/* 面包屑导航 */}
+      <Breadcrumb {...props} />
+
       <div id='post-outer-wrapper' className='px-5  md:px-0'>
         {!currentSearch ? (
           <SearchNav {...props} />
@@ -224,20 +266,25 @@ const LayoutArchive = props => {
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
 
   return (
-    <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
-      {/* 文章分类条 */}
-      <CategoryBar {...props} border={false} />
+    <>
+      {/* 面包屑导航 */}
+      <Breadcrumb {...props} />
 
-      <div className='px-3'>
-        {Object.keys(archivePosts).map(archiveTitle => (
-          <BlogPostArchive
-            key={archiveTitle}
-            posts={archivePosts[archiveTitle]}
-            archiveTitle={archiveTitle}
-          />
-        ))}
+      <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
+        {/* 文章分类条 */}
+        <CategoryBar {...props} border={false} />
+
+        <div className='px-3'>
+          {Object.keys(archivePosts).map(archiveTitle => (
+            <BlogPostArchive
+              key={archiveTitle}
+              posts={archivePosts[archiveTitle]}
+              archiveTitle={archiveTitle}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -291,8 +338,11 @@ const LayoutSlug = props => {
   }, [post])
   return (
     <>
+      {/* 面包屑导航 */}
+      {!lock && post && <Breadcrumb post={post} {...props} />}
+
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4`}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 

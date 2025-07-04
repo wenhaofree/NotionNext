@@ -102,13 +102,33 @@ const NotionPage = ({ post, className }) => {
 
   useEffect(() => {
     if (isBrowser) {
-      loadExternalResource('/js/prism-mac-style.js', 'js').then(() => {
-        setTimeout(() => {
-          if (window) {
-            window.Prism && window.Prism.highlightAll()
+      loadExternalResource('/js/prism-mac-style.js', 'js')
+        .then(() => {
+          setTimeout(() => {
+            if (window && window.Prism) {
+              try {
+                window.Prism.highlightAll()
+                // 如果 Mac 样式脚本已加载，初始化它
+                if (window.PrismMacStyle) {
+                  window.PrismMacStyle.init()
+                }
+              } catch (error) {
+                console.warn('Prism highlighting failed:', error)
+              }
+            }
+          }, 200)
+        })
+        .catch((error) => {
+          console.warn('Failed to load prism-mac-style.js:', error)
+          // 即使 Mac 样式加载失败，也要尝试基本的代码高亮
+          if (window && window.Prism) {
+            try {
+              window.Prism.highlightAll()
+            } catch (highlightError) {
+              console.warn('Basic Prism highlighting also failed:', highlightError)
+            }
           }
-        }, 200)
-      })
+        })
     }
   })
 

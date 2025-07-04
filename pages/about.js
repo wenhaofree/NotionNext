@@ -97,6 +97,39 @@ const AboutContent = () => {
         </section>
 
         <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">🎓 我们的专业领域</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-semibold mb-2 text-blue-600">前端开发</h3>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• React/Vue.js 框架开发</li>
+                <li>• 响应式网页设计</li>
+                <li>• 性能优化技巧</li>
+                <li>• 现代化工具链</li>
+              </ul>
+            </div>
+            <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-semibold mb-2 text-green-600">后端技术</h3>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• Node.js/Python 开发</li>
+                <li>• 数据库设计与优化</li>
+                <li>• API 设计最佳实践</li>
+                <li>• 微服务架构</li>
+              </ul>
+            </div>
+            <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-semibold mb-2 text-purple-600">DevOps</h3>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• CI/CD 流水线</li>
+                <li>• Docker 容器化</li>
+                <li>• 云服务部署</li>
+                <li>• 监控与日志</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">📊 网站数据</h2>
           <div className="grid md:grid-cols-4 gap-4 mb-6">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
