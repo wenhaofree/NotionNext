@@ -60,8 +60,8 @@ const BLOG = {
   ADSENSE_SLOT_MOBILE_BANNER: process.env.NEXT_PUBLIC_ADSENSE_SLOT_MOBILE_BANNER || '', // 移动端横幅
   ADSENSE_SLOT_DESKTOP_BANNER: process.env.NEXT_PUBLIC_ADSENSE_SLOT_DESKTOP_BANNER || '', // 桌面端横幅
 
-  // Cookie 同意配置
-  COOKIE_CONSENT_ENABLED: process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENABLED || true,
+  // Cookie 同意配置 - 已注释，根据用户要求禁用
+  // COOKIE_CONSENT_ENABLED: process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENABLED || true,
 
   // 自定义菜单
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu类型的菜单，替代了3.12版本前的Page类型
