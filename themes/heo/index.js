@@ -67,7 +67,7 @@ const LayoutBase = props => {
       {router.route === '/' ? (
         <>
           <NoticeBar />
-          {/* <Hero {...props} /> 注释Hero */}
+          <Hero {...props} />
         </>
       ) : null}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
@@ -148,30 +148,62 @@ const LayoutIndex = props => {
 
   return (
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
-      {/* Hero 区域 - 增强版 */}
-      {siteConfig('HEO_HOME_BANNER_ENABLE', true, CONFIG) && (
-        <div className='mb-8'>
-          <Hero {...props} />
-        </div>
-      )}
-
       {/* 网站介绍卡片 - AdSense 优化 */}
-      <div className='mb-8 bg-white dark:bg-[#1e1e1e] rounded-xl p-6 border dark:border-gray-700'>
-        <h2 className='text-2xl font-bold mb-4 text-gray-800 dark:text-white'>
+      <div className='mb-8 bg-white dark:bg-[#1e1e1e] rounded-xl p-6 border dark:border-gray-700 shadow-lg'>
+        <h2 className='text-3xl font-bold mb-4 text-gray-800 dark:text-white flex items-center'>
+          <i className='fas fa-rocket mr-3 text-blue-500'></i>
           欢迎来到 {siteInfo?.title}
         </h2>
-        <p className='text-gray-600 dark:text-gray-300 leading-relaxed mb-4'>
-          {siteInfo?.description || '这里是一个专注于分享高质量内容的知识平台，我们致力于为读者提供有价值的技术见解、学习资源和实用经验。'}
-        </p>
-        <div className='flex flex-wrap gap-2'>
-          <span className='px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm'>
+        <div className='grid md:grid-cols-2 gap-6'>
+          <div>
+            <p className='text-gray-600 dark:text-gray-300 leading-relaxed mb-4'>
+              {siteInfo?.description || '这里是一个专注于分享高质量内容的知识平台，我们致力于为读者提供有价值的技术见解、学习资源和实用经验。'}
+            </p>
+            <p className='text-gray-600 dark:text-gray-300 leading-relaxed mb-4'>
+              我们专注于提供最新的技术文章、实用教程和深度分析，帮助开发者和技术爱好者提升技能，解决实际问题。无论您是初学者还是资深专家，都能在这里找到有价值的内容。
+            </p>
+          </div>
+          <div>
+            <h3 className='text-xl font-semibold mb-3 text-gray-800 dark:text-white'>
+              <i className='fas fa-star mr-2 text-yellow-500'></i>
+              主要特色
+            </h3>
+            <ul className='space-y-2 text-gray-600 dark:text-gray-300'>
+              <li className='flex items-center'>
+                <i className='fas fa-check-circle mr-2 text-green-500'></i>
+                原创技术文章与深度解析
+              </li>
+              <li className='flex items-center'>
+                <i className='fas fa-check-circle mr-2 text-green-500'></i>
+                实用开发工具与资源分享
+              </li>
+              <li className='flex items-center'>
+                <i className='fas fa-check-circle mr-2 text-green-500'></i>
+                最新技术趋势与行业动态
+              </li>
+              <li className='flex items-center'>
+                <i className='fas fa-check-circle mr-2 text-green-500'></i>
+                开源项目与代码示例
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className='flex flex-wrap gap-3 mt-6'>
+          <span className='px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium flex items-center'>
+            <i className='fas fa-code mr-2'></i>
             技术分享
           </span>
-          <span className='px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm'>
+          <span className='px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium flex items-center'>
+            <i className='fas fa-graduation-cap mr-2'></i>
             学习资源
           </span>
-          <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm'>
+          <span className='px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm font-medium flex items-center'>
+            <i className='fas fa-book mr-2'></i>
             实用教程
+          </span>
+          <span className='px-4 py-2 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm font-medium flex items-center'>
+            <i className='fas fa-tools mr-2'></i>
+            开发工具
           </span>
         </div>
       </div>

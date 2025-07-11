@@ -62,6 +62,18 @@ export default function LazyImage({
     const adjustedImageSrc =
       adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
 
+    // 如果设置了优先级，立即加载图片
+    if (priority) {
+      const img = new Image()
+      img.src = adjustedImageSrc
+      img.onload = () => {
+        setCurrentSrc(adjustedImageSrc)
+        handleImageLoaded(adjustedImageSrc)
+      }
+      img.onerror = handleImageError
+      return
+    }
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -79,17 +91,22 @@ export default function LazyImage({
           }
         })
       },
-      { rootMargin: '50px 0px' } // 轻微提前加载
+      { 
+        rootMargin: '100px 0px',  // 增加预加载距离
+        threshold: 0.1 
+      }
     )
+    
     if (imageRef.current) {
       observer.observe(imageRef.current)
     }
+    
     return () => {
       if (imageRef.current) {
         observer.unobserve(imageRef.current)
       }
     }
-  }, [src, maxWidth])
+  }, [src, maxWidth, priority])
 
   // 动态添加width、height和className属性，仅在它们为有效值时添加
   const imgProps = {

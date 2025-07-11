@@ -39,7 +39,7 @@ yarn-error.log*
 /pnpm-lock.yaml
 .idea
 .vscode
-
+settings.local.json
 
 # sitemap
 /public/robots.txt

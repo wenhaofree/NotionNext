@@ -451,30 +451,6 @@ const getBreadcrumbStructuredData = (meta, siteInfo) => {
     "@type": "BreadcrumbList",
     "itemListElement": items
   }
-
-  if (meta?.category) {
-    items.push({
-      "@type": "ListItem",
-      "position": 2,
-      "name": meta.category,
-      "item": `${siteInfo?.link}/category/${meta.category}`
-    })
-  }
-
-  if (meta?.title && meta?.type === 'Post') {
-    items.push({
-      "@type": "ListItem",
-      "position": items.length + 1,
-      "name": meta.title,
-      "item": `${siteInfo?.link}/${meta.slug}`
-    })
-  }
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items
-  }
 }
 
 export default SEO
