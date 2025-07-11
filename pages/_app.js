@@ -27,9 +27,10 @@ const ClerkProvider = dynamic(() =>
 const AdSenseScript = dynamic(() =>
   import('@/components/AdSense').then(m => m.AdSenseScript)
 )
-const CookieConsent = dynamic(() =>
-  import('@/components/CookieConsent')
-)
+// Cookie 同意组件已注释 - 根据用户要求禁用
+// const CookieConsent = dynamic(() =>
+//   import('@/components/CookieConsent')
+// )
 
 /**
  * App挂载DOM 入口文件
@@ -67,7 +68,8 @@ const MyApp = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
-      <CookieConsent />
+      {/* Cookie 同意组件已注释 - 根据用户要求禁用 */}
+      {/* <CookieConsent /> */}
     </GlobalContextProvider>
   )
   return (

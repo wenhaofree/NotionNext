@@ -6,6 +6,7 @@ import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import WavesArea from './WavesArea'
+import PostQualityIndicator from './PostQualityIndicator'
 
 /**
  * 文章页头
@@ -99,6 +100,11 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             )}
             {post.title}
           </div>
+
+          {/* 内容质量指示器 */}
+          {/* <div className='max-w-5xl mt-4 flex justify-center md:justify-start'>
+            <PostQualityIndicator post={post} className="w-full max-w-md" />
+          </div> */}
 
           {/* 标题底部补充信息 */}
           <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
