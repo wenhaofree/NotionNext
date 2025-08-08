@@ -6,6 +6,7 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
+import Head from 'next/head'
 import CONFIG from '../config'
 
 /**
@@ -24,7 +25,7 @@ const Hero = props => {
       <div
         id='hero'
         style={{ zIndex: 1 }}
-        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''} recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
+        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''} recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-auto w-full mx-auto flex-row flex-nowrap flex relative will-change-transform`}>
         {/* 左侧banner组 */}
         <BannerGroup {...props} />
 
@@ -372,6 +373,15 @@ function TodayCard({ cRef, siteInfo }) {
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
 
+  // 预连接 LCP 图片源，降低连接建立延迟
+  const coverOrigin = (() => {
+    try {
+      return siteInfo?.pageCover ? new URL(siteInfo.pageCover).origin : undefined
+    } catch {
+      return undefined
+    }
+  })()
+
   /**
    * 外部可以调用此方法
    */
@@ -453,11 +463,33 @@ function TodayCard({ cRef, siteInfo }) {
           </div>
         </div>
 
+        {/* 预加载 LCP 封面图 & 预连接源站 */}
+        <Head>
+          {siteInfo?.pageCover && (
+            <>
+              <link rel='preload' as='image' href={siteInfo.pageCover} />
+              {(() => {
+                try {
+                  const origin = new URL(siteInfo.pageCover).origin
+                  return <link rel='preconnect' href={origin} crossOrigin='' />
+                } catch {
+                  return null
+                }
+              })()}
+            </>
+          )}
+        </Head>
         {/* 封面图 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={siteInfo?.pageCover}
           id='today-card-cover'
+          alt=''
+          aria-hidden='true'
+          fetchpriority='high'
+          decoding='async'
+          loading='eager'
+          sizes='(min-width: 1280px) 100vw, 100vw'
           className={`${
             isCoverUp ? '' : ' pointer-events-none'
           } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}

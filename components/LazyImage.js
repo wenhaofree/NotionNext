@@ -113,13 +113,16 @@ export default function LazyImage({
     ref: imageRef,
     src: currentSrc,
     'data-src': src, // 存储原始图片地址
-    alt: alt || 'Lazy loaded image',
+    alt: alt || '', // 装饰性图片默认不朗读，调用方如需语义请传入alt
     onLoad: handleThumbnailLoaded,
     onError: handleImageError,
     className: `${className || ''} lazy-image-placeholder`,
     style,
     width: width || 'auto',
     height: height || 'auto',
+    fetchpriority: priority ? 'high' : undefined,
+    decoding: 'async',
+    loading: priority ? 'eager' : 'lazy',
     onClick
   }
 

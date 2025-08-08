@@ -87,9 +87,14 @@ const LayoutBase = props => {
   )
   const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
-  // 加载wow动画
+  // 加载 wow 动画（延后到空闲时间，避免阻塞首屏渲染/LCP）
   useEffect(() => {
-    loadWowJS()
+    const defer = () => loadWowJS()
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      window.requestIdleCallback(defer)
+    } else {
+      setTimeout(defer, 1500)
+    }
   }, [])
 
   return (
